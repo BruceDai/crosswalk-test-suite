@@ -15,7 +15,7 @@ PKG_NAME = os.path.basename(SCRIPT_DIR)
 PARAMETERS = None
 XW_ENV = "export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/5000/dbus/user_bus_socket"
 SRC_DIR = "/home/app/content"
-PKG_SRC_DIR = "%s/opt/%s" % (SRC_DIR, PKG_NAME)
+PKG_SRC_DIR = "%s/tct/opt/%s" % (SRC_DIR, PKG_NAME)
 
 
 def doCMD(cmd):
@@ -60,8 +60,12 @@ def getPKGID(pkg_name=None):
 
     test_app_id = None
     for line in output:
-        if pkg_name in line:
-            test_app_id = string.split(line.strip("\r\n"), " ")[0]
+        pkg_infos = line.split()
+        if len(pkg_infos) == 1:
+            continue
+        name = pkg_infos[1]
+        if pkg_name == name:
+            test_app_id = pkg_infos[0]
             print test_app_id
             break
     return test_app_id
@@ -81,7 +85,7 @@ def doRemoteCopy(src=None, dest=None):
         cmd_prefix = "sdb -s %s push" % PARAMETERS.device
         cmd = "%s %s %s" % (cmd_prefix, src, dest)
     else:
-        cmd = "scp %s %s:/%s" % (src, PARAMETERS.device, dest)
+        cmd = "scp -r %s %s:/%s" % (src, PARAMETERS.device, dest)
 
     (return_code, output) = doCMD(cmd)
     doRemoteCMD("sync")
@@ -95,6 +99,9 @@ def doRemoteCopy(src=None, dest=None):
 def uninstPKGs():
     action_status = True
     for root, dirs, files in os.walk(SCRIPT_DIR):
+        if root.endswith("mediasrc"):
+            continue
+
         for file in files:
             if file.endswith(".xpk"):
                 pkg_id = getPKGID(os.path.basename(os.path.splitext(file)[0]))
@@ -113,6 +120,11 @@ def uninstPKGs():
     if return_code != 0:
         action_status = False
 
+    (return_code, output) = doRemoteCMD(
+        "rm -rf %s/Others" % SRC_DIR)
+    if return_code != 0:
+        action_status = False
+
     return action_status
 
 
@@ -123,6 +135,9 @@ def instPKGs():
     if return_code != 0:
         action_status = False
     for root, dirs, files in os.walk(SCRIPT_DIR):
+        if root.endswith("mediasrc"):
+            continue
+
         for file in files:
             if file.endswith(".xpk"):
                 if not doRemoteCopy(os.path.join(root, file), "%s/%s" % (SRC_DIR, file)):
@@ -136,15 +151,8 @@ def instPKGs():
                         break
 
     # Do some special copy/delete... steps
-    '''
-    (return_code, output) = doRemoteCMD(
-        "mkdir -p %s/tests" % PKG_SRC_DIR)
-    if return_code != 0:
+    if not doRemoteCopy(os.path.join(SCRIPT_DIR, "mediasrc"), "%s/Others" % SRC_DIR):
         action_status = False
-
-    if not doRemoteCopy("specname/tests", "%s/tests" % PKG_SRC_DIR):
-        action_status = False
-    '''
 
     return action_status
 
