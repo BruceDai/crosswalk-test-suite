@@ -641,7 +641,7 @@ def main():
             pkg_json = config_json["pkg-list"][i_pkg]
 
     if not pkg_json or pkg_json == "":
-        LOG.error("%s, Fail to read pkg json, exit ..." % e)
+        LOG.error("Fail to read pkg json, exit ...")
         sys.exit(1)
 
     if not perpareBuildRoot():

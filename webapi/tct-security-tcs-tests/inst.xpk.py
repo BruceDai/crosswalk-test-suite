@@ -15,7 +15,7 @@ PKG_NAME = os.path.basename(SCRIPT_DIR)
 PARAMETERS = None
 XW_ENV = "export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/5000/dbus/user_bus_socket"
 SRC_DIR = "/home/app/content"
-PKG_SRC_DIR = "%s/opt/%s" % (SRC_DIR, PKG_NAME)
+PKG_SRC_DIR = "%s/tct/opt/%s" % (SRC_DIR, PKG_NAME)
 
 
 def doCMD(cmd):
@@ -60,8 +60,12 @@ def getPKGID(pkg_name=None):
 
     test_app_id = None
     for line in output:
-        if pkg_name in line:
-            test_app_id = string.split(line.strip("\r\n"), " ")[0]
+        pkg_infos = line.split()
+        if len(pkg_infos) == 1:
+            continue
+        name = pkg_infos[1]
+        if pkg_name == name:
+            test_app_id = pkg_infos[0]
             print test_app_id
             break
     return test_app_id
@@ -81,7 +85,7 @@ def doRemoteCopy(src=None, dest=None):
         cmd_prefix = "sdb -s %s push" % PARAMETERS.device
         cmd = "%s %s %s" % (cmd_prefix, src, dest)
     else:
-        cmd = "scp %s %s:/%s" % (src, PARAMETERS.device, dest)
+        cmd = "scp -r %s %s:/%s" % (src, PARAMETERS.device, dest)
 
     (return_code, output) = doCMD(cmd)
     doRemoteCMD("sync")
