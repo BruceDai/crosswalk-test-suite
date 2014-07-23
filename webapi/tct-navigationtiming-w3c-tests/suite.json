@@ -1,0 +1,63 @@
+{
+    "pkg-blacklist": [
+        "config.xml", 
+        "pack.py", 
+        "testcase.xsl", 
+        "testresult.xsl", 
+        "tests.css", 
+        "icon.png", 
+        "manifest.json", 
+        "suite.json", 
+        "inst.*"
+    ], 
+    "pkg-list": {
+        "apk,cordova": {
+            "blacklist": [
+                "navigationtiming-py"
+            ], 
+            "copylist": {
+                "inst.apk.py": "inst.py", 
+                "tests.xml": "tests.xml"
+            }, 
+            "pkg-app": {
+                "blacklist": [
+                    "navigationtiming-py"
+                ]
+            }
+        }, 
+        "apk-aio": {
+            "blacklist": [
+                "navigationtiming-py"
+            ]
+        }, 
+        "wgt": {
+            "blacklist": [
+                "navigationtiming-py"
+            ], 
+            "copylist": {
+                "inst.wgt.py": "inst.py", 
+                "tests.xml": "tests.xml"
+            }, 
+            "pkg-app": {
+                "blacklist": [
+                    "navigationtiming-py"
+                ]
+            }
+        }, 
+        "xpk": {
+            "blacklist": [
+                "navigationtiming-py"
+            ], 
+            "copylist": {
+                "inst.xpk.py": "inst.py", 
+                "tests.xml": "tests.xml"
+            }, 
+            "pkg-app": {
+                "blacklist": [
+                    "navigationtiming-py"
+                ]
+            }
+        }
+    }, 
+    "pkg-name": "tct-navigationtiming-w3c-tests"
+}
