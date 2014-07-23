@@ -143,8 +143,14 @@ def instPKGs():
                         action_status = False
                         break
 
-    if not doRemoteCopy("%s/media" % SCRIPT_DIR, "%s/%s" % (SRC_DIR, PKG_NAME)):
+    (return_code, output) = doRemoteCMD("mkdir -p %s/%s" % (SRC_DIR, PKG_NAME))
+    if return_code != 0:
         action_status = False
+
+    for item in os.listdir(SCRIPT_DIR):
+        if item.find("webapi-tizen-appcontrol-test_") != -1:
+            if not doRemoteCopy("%s/%s" % (SCRIPT_DIR, item), "%s/%s/%s" % (SRC_DIR, PKG_NAME, item)):
+                action_status = False
 
     return action_status
 

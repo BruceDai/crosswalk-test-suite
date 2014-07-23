@@ -150,8 +150,7 @@ def instPKGs():
                         action_status = False
                         break
 
-    # Do some special copy/delete... steps
-    if not doRemoteCopy(os.path.join(SCRIPT_DIR, "mediasrc"), "%s/Others" % SRC_DIR):
+    if not doRemoteCopy("%s/mediasrc" % SCRIPT_DIR, "%s/Others" % SRC_DIR):
         action_status = False
 
     return action_status

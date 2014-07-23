@@ -139,17 +139,6 @@ def instPKGs():
                         action_status = False
                         break
 
-    # Do some special copy/delete... steps
-    '''
-    (return_code, output) = doRemoteCMD(
-        "mkdir -p %s/tests" % PKG_SRC_DIR)
-    if return_code != 0:
-        action_status = False
-
-    if not doRemoteCopy("specname/tests", "%s/tests" % PKG_SRC_DIR):
-        action_status = False
-    '''
-
     return action_status
 
 

@@ -117,7 +117,7 @@ def uninstPKGs():
     if return_code != 0:
         action_status = False
 
-    (return_code, output) = doRemoteCMD("rm -rf %s/tct-content-tizen-tests" % SRC_DIR)
+    (return_code, output) = doRemoteCMD("rm -rf %s/%s" % (SRC_DIR, PKG_NAME))
     if return_code != 0:
         action_status = False
 
@@ -143,7 +143,7 @@ def instPKGs():
                         action_status = False
                         break
 
-    if not doRemoteCopy("media", "%s/tct-content-tizen-tests" % SRC_DIR):
+    if not doRemoteCopy("%s/media" % SCRIPT_DIR, "%s/%s" % (SRC_DIR, PKG_NAME)):
         action_status = False
 
     return action_status

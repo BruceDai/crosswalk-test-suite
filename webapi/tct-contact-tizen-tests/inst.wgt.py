@@ -144,7 +144,7 @@ def instPKGs():
                         action_status = False
                         break
 
-    if not doRemoteCopy("mediasrc/*", SRC_DIR):
+    if not doRemoteCopy("%s/mediasrc/*" % SCRIPT_DIR, SRC_DIR):
         action_status = False
 
     return action_status
