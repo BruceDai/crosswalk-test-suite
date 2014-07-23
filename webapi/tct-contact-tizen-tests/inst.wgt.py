@@ -100,7 +100,7 @@ def uninstPKGs():
     action_status = True
     for root, dirs, files in os.walk(SCRIPT_DIR):
         for file in files:
-            if file.endswith(".xpk"):
+            if file.endswith(".wgt"):
                 pkg_id = getPKGID(os.path.basename(os.path.splitext(file)[0]))
                 if not pkg_id:
                     action_status = False
@@ -117,6 +117,11 @@ def uninstPKGs():
     if return_code != 0:
         action_status = False
 
+    for file in os.listdir("%s/mediasrc" % SCRIPT_DIR):
+        (return_code, output) = doRemoteCMD("rm -rf %s/%s" % (SRC_DIR, file))
+        if return_code != 0:
+            action_status = False
+
     return action_status
 
 
@@ -128,7 +133,7 @@ def instPKGs():
         action_status = False
     for root, dirs, files in os.walk(SCRIPT_DIR):
         for file in files:
-            if file.endswith(".xpk"):
+            if file.endswith(".wgt"):
                 if not doRemoteCopy(os.path.join(root, file), "%s/%s" % (SRC_DIR, file)):
                     action_status = False
                 (return_code, output) = doRemoteCMD(
@@ -139,14 +144,8 @@ def instPKGs():
                         action_status = False
                         break
 
-    for item in glob.glob("%s/*" % SCRIPT_DIR):
-        if item.endswith(".xpk"):
-            continue
-        elif item.endswith("inst.py"):
-            continue
-        else:
-            if not doRemoteCopy(item, PKG_SRC_DIR):
-                action_status = False
+    if not doRemoteCopy("mediasrc/*", SRC_DIR):
+        action_status = False
 
     return action_status
 

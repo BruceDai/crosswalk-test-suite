@@ -117,6 +117,11 @@ def uninstPKGs():
     if return_code != 0:
         action_status = False
 
+    for file in os.listdir("%s/mediasrc" % SCRIPT_DIR):
+        (return_code, output) = doRemoteCMD("rm -rf %s/%s" % (SRC_DIR, file))
+        if return_code != 0:
+            action_status = False
+
     return action_status
 
 
@@ -139,14 +144,8 @@ def instPKGs():
                         action_status = False
                         break
 
-    for item in glob.glob("%s/*" % SCRIPT_DIR):
-        if item.endswith(".xpk"):
-            continue
-        elif item.endswith("inst.py"):
-            continue
-        else:
-            if not doRemoteCopy(item, PKG_SRC_DIR):
-                action_status = False
+    if not doRemoteCopy("mediasrc/*", SRC_DIR):
+        action_status = False
 
     return action_status
 
