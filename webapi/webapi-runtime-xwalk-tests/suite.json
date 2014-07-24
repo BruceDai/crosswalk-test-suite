@@ -70,5 +70,5 @@
             }
         }
     }, 
-    "pkg-name": "tct-alarm-tizen-tests"
+    "pkg-name": "webapi-runtime-xwalk-tests"
 }
