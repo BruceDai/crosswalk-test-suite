@@ -26,7 +26,9 @@
             "subapp-list": {
                 "security/support/sharedDirTestApp": {
                     "app-name": "sharedDirTestApp", 
-                    "blacklist": [], 
+                    "blacklist": [
+                        "manifest.json"
+                    ], 
                     "install-path": "apps", 
                     "sign-flag": "true"
                 }
@@ -46,7 +48,9 @@
             "subapp-list": {
                 "security/support/sharedDirTestApp": {
                     "app-name": "sharedDirTestApp", 
-                    "blacklist": [], 
+                    "blacklist": [
+                        "config.xml"
+                    ], 
                     "install-path": "apps"
                 }
             }
