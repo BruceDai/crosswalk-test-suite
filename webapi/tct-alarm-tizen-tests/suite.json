@@ -26,7 +26,7 @@
             "subapp-list": {
                 "alarm/support/UnitTest-AlarmTest1": {
                     "app-name": "UnitTest-AlarmTest1", 
-                    "blacklist": [], 
+                    "blacklist": ["manifest.json"], 
                     "install-path": "apps", 
                     "sign-flag": "true"
                 }
@@ -46,7 +46,7 @@
             "subapp-list": {
                 "alarm/support/UnitTest-AlarmTest1": {
                     "app-name": "UnitTest-AlarmTest1", 
-                    "blacklist": [], 
+                    "blacklist": ["config.xml"], 
                     "install-path": "apps"
                 }
             }
