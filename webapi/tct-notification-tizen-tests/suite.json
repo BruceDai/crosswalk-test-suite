@@ -40,7 +40,7 @@
                 "webrunner"
             ], 
             "copylist": {
-                "inst.xpk.py": "inst.py" 
+                "inst.xpk.py": "inst.py"
             }, 
             "pkg-app": {
                 "blacklist": []
