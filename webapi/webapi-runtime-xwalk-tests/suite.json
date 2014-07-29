@@ -25,17 +25,23 @@
             "subapp-list": {
                 "runtime/onInstalled": {
                     "app-name": "onInstalled", 
-                    "blacklist": [], 
+                    "blacklist": [
+                        "manifest.json"
+                    ], 
                     "install-path": "apps"
                 }, 
                 "runtime/onLaunched": {
                     "app-name": "onLaunched", 
-                    "blacklist": [], 
+                    "blacklist": [
+                        "manifest.json"
+                    ], 
                     "install-path": "apps"
                 }, 
                 "runtime/onSuspend": {
                     "app-name": "onSuspend", 
-                    "blacklist": [], 
+                    "blacklist": [
+                        "manifest.json"
+                    ], 
                     "install-path": "apps"
                 }
             }
@@ -54,17 +60,23 @@
             "subapp-list": {
                 "runtime/onInstalled": {
                     "app-name": "onInstalled", 
-                    "blacklist": [], 
+                    "blacklist": [
+                        "config.xml"
+                    ], 
                     "install-path": "apps"
                 }, 
                 "runtime/onLaunched": {
                     "app-name": "onLaunched", 
-                    "blacklist": [], 
+                    "blacklist": [
+                        "config.xml"
+                    ], 
                     "install-path": "apps"
                 }, 
                 "runtime/onSuspend": {
                     "app-name": "onSuspend", 
-                    "blacklist": [], 
+                    "blacklist": [
+                        "config.xml"
+                    ], 
                     "install-path": "apps"
                 }
             }

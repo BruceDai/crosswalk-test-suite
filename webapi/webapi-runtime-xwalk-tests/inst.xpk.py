@@ -98,19 +98,17 @@ def doRemoteCopy(src=None, dest=None):
 
 def uninstPKGs():
     action_status = True
-    for root, dirs, files in os.walk(SCRIPT_DIR):
-        for file in files:
-            if file.endswith(".xpk"):
-                pkg_id = getPKGID(os.path.basename(os.path.splitext(file)[0]))
-                if not pkg_id:
-                    action_status = False
-                    continue
-                (return_code, output) = doRemoteCMD(
-                    "xwalkctl -u %s" % pkg_id)
-                for line in output:
-                    if "Failure" in line:
-                        action_status = False
-                        break
+
+    for pkg_name in ["onInstalled_test", "onLaunch_test", "onSuspend_test", "webapi-runtime-xwalk-tests"]:
+        pkg_id = getPKGID(pkg_name)
+        if not pkg_id:
+            action_status = False
+            continue
+        (return_code, output) = doRemoteCMD("xwalkctl -u %s" % pkg_id)
+        for line in output:
+            if "Failure" in line:
+                action_status = False
+                break
 
     (return_code, output) = doRemoteCMD(
         "rm -rf %s" % PKG_SRC_DIR)
