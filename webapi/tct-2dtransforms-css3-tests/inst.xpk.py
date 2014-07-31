@@ -22,20 +22,18 @@ def doCMD(cmd):
     # Do not need handle timeout in this short script, let tool do it
     print "-->> \"%s\"" % cmd
     output = []
+    cmd_return_code = 1
     cmd_proc = subprocess.Popen(
-        cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    while True:
-        cmd_return_code = cmd_proc.poll()
-        if cmd_return_code != None:
-            break
+        cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
 
-    if not cmd.endswith("&"):
-        while True:
-            line = cmd_proc.stdout.readline().strip("\r\n")
-            print line
-            if not line or line.find("daemon started") >= 0:
-                break
-            output.append(line)
+    while True:
+        output_line = cmd_proc.stdout.readline().strip("\r\n")
+        cmd_return_code = cmd_proc.poll()
+        if output_line == '' and cmd_return_code != None:
+            break
+        sys.stdout.write("%s\n" % output_line)
+        sys.stdout.flush()
+        output.append(output_line)
 
     return (cmd_return_code, output)
 
